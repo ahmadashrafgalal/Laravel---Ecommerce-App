@@ -21,16 +21,16 @@ class AuthController extends Controller
         ]);
 
         // dd($credentials);
-    
+        
         $password = bcrypt($credentials['password']); 
     
         $imagePath = null;
 
         if ($request->hasFile('img')) {
             $imageName = time() . '.' . $request->img->extension();
-            $request->img->storeAs('public/profile_images', $imageName);
+            $request->img->storeAs('storage/profile_images', $imageName, 'public');
             $imagePath = 'profile_images/' . $imageName;
-        }
+        }   
     
         $user = User::create([
             'name' => $credentials['username'],
@@ -41,13 +41,10 @@ class AuthController extends Controller
     
         Auth::login($user);
     
-        return "Auth";
+        return to_route('products.home');
     }
     
     
-
-
-
     public function showLoginForm(){
         return view('auth.login'); 
     }
@@ -59,12 +56,12 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {  
-            // return redirect()->route('home'); 
-            return "Auth";
+            return to_route('home'); 
+            // return "Auth";
         }
 
-        // return back()->withErrors(['email' => 'Wrong email or password.']); 
-        return "NOT Auth";
+        return back()->withErrors(['email' => 'Wrong email or password.']); 
+        // return "NOT Auth";
     }
 
     public function logout(){

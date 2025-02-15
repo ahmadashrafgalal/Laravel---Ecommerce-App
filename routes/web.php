@@ -16,6 +16,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Require Login page test
 Route::middleware('auth')->group(function(){
-    Route::get('/home', function () {return "Hello You Are Authinticated";});
+    Route::get('/home', function () {
+        return view('products.home');
+    })->name('products.home');
+    
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
