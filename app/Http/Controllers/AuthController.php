@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
-class AuthController extends Controller
-{
+class AuthController extends Controller {
+
     public function showRegisterForm(){
         return view('auth.register'); 
     }
@@ -21,7 +21,7 @@ class AuthController extends Controller
         ]);
 
         // dd($credentials);
-        
+
         $password = bcrypt($credentials['password']); 
     
         $imagePath = null;
